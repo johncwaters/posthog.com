@@ -31,7 +31,7 @@ posthog.init('<ph_project_token>', {
 
 If you set `maskInputOptions` without a `password` key, PostHog adds `password: true`, so password inputs stay masked. To record password inputs, set `password: false` explicitly.
 
-A masking option that you set in `posthog.init` takes precedence over the **Privacy and masking** setting in your [project settings](https://us.posthog.com/settings/project-replay). The SDK logs a warning when the two differ.
+You can also set input and text masking in the **Privacy and masking** setting in your [project settings](https://us.posthog.com/settings/project-replay). The web SDK loads this setting remotely, so it applies without a code change. A masking option that you set in `posthog.init` takes precedence over the project setting. The SDK logs a warning when the two differ.
 
 ### Mask or un-mask specific inputs
 
