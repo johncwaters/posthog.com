@@ -125,7 +125,11 @@ Note that adding `ph-no-capture` will also prevent any [autocapture](/docs/data/
 
 ## Project masking settings
 
-You can also configure masking without code changes in the **Privacy and masking** section of your [replay settings](https://us.posthog.com/settings/project-replay). If you set a masking option (`maskAllInputs`, `maskTextSelector`, `blockSelector`, or `maskAllElementAttributes`) in the `session_recording` config of `posthog.init`, it takes precedence over the project setting for that option. When the two differ, the SDK logs a warning once in the browser console. To use the project setting, remove that option from `posthog.init`.
+You can also configure masking without code changes in the **Privacy and masking** section of your [replay settings](https://us.posthog.com/settings/project-replay). The web SDK applies the project setting for `maskAllInputs` and `maskTextSelector` from version 1.227.0.
+
+If you set a masking option (`maskAllInputs`, `maskTextSelector`, `blockSelector`, or `maskAllElementAttributes`) in the `session_recording` config of `posthog.init`, it takes precedence over the project setting for that option. When the two differ, the SDK logs a warning once in the browser console. To use the project setting, remove that option from `posthog.init`.
+
+Precedence applies to each option separately. Options that you don't set in `posthog.init` still use the project setting. For example, if the project setting masks all text and inputs, and you set only `maskAllInputs: false` in code, inputs are recorded but text stays masked.
 
 ## URL redaction
 
