@@ -2,7 +2,9 @@ import SensitiveThirdPartyScreens from "./sensitive-third-party-screens.mdx"
 
 ## Input elements
 
-As any input element is highly likely to contain sensitive text such as email or password, **we mask these by default**. You can explicitly set this to false to disable the masking. You can then specify inputs types you would like to be masked.
+As any input element is highly likely to contain sensitive text such as email or password, **we mask these by default** (`maskAllInputs` defaults to `true`). The exceptions are `hidden` and `file` inputs, whose values are recorded unmasked. If these hold sensitive data, block them with `ph-no-capture` or `blockSelector` (see [other elements](#other-elements)).
+
+You can explicitly set `maskAllInputs` to `false` to disable the masking. You can then specify input types you would like to be masked with `maskInputOptions`. Password inputs stay masked even if you leave `password` out of `maskInputOptions`, because the SDK adds `password: true` to a partial override. To record password fields, which we don't recommend, set `password: false` explicitly.
 
 ```ts
 posthog.init('<ph_project_token>', {
@@ -25,7 +27,8 @@ posthog.init('<ph_project_token>', {
             // week: false,
             // textarea: false,
             // select: false,
-    }
+        },
+    },
 })
 ```
 
@@ -52,7 +55,9 @@ posthog.init('<ph_project_token>', {
 
 ## Text elements
 
-General text is not masked by default, but we provide multiple options for masking text:
+General text and images are not masked by default, but we provide multiple options for masking text. Text masking only applies to text content. It doesn't hide images, whose `src` is still recorded. To hide an image, such as a scanned document, use `ph-no-capture` (see [other elements](#other-elements)).
+
+You can add the `ph-mask` CSS class to an element to mask its text, or use the config options below.
 
 ### Mask all text
 
@@ -108,7 +113,7 @@ posthog.init('<ph_project_token>', {
 
 ## Other Elements
 
-If your application displays sensitive user information outside of input or text fields, or if there are areas of your application that you simply don't want to capture, you need to update your codebase to prevent PostHog from capturing this information during session recordings.
+If your application displays sensitive user information outside of input or text fields, such as images, or if there are areas of your application that you simply don't want to capture, you need to update your codebase to prevent PostHog from capturing this information during session recordings.
 
 To do so, you should add the CSS class name `ph-no-capture` to elements which should not be recorded. This will lead to the element being replaced with a block of the same size when you play back the recordings. Make sure everyone who watches recordings in your team is aware of this, so that they don't think your product is broken when something doesn't show up!
 
@@ -117,6 +122,10 @@ To do so, you should add the CSS class name `ph-no-capture` to elements which sh
 ```
 
 Note that adding `ph-no-capture` will also prevent any [autocapture](/docs/data/autocapture) events from being captured from that element.
+
+## Project masking settings
+
+You can also configure masking without code changes in the **Privacy and masking** section of your [replay settings](https://us.posthog.com/settings/project-replay). If you set a masking option (`maskAllInputs`, `maskTextSelector`, `blockSelector`, or `maskAllElementAttributes`) in the `session_recording` config of `posthog.init`, it takes precedence over the project setting for that option. When the two differ, the SDK logs a warning once in the browser console. To use the project setting, remove that option from `posthog.init`.
 
 ## URL redaction
 
@@ -143,6 +152,8 @@ The callback runs in the browser, so redacted values never leave the user's devi
 ## Common example configs
 
 ### Maximum privacy - mask everything
+
+This masks all inputs and text. It doesn't hide images, so add `ph-no-capture` to any image that shows sensitive data.
 
 ```
 {
