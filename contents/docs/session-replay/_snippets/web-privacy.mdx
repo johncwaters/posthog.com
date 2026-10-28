@@ -2,7 +2,11 @@ import SensitiveThirdPartyScreens from "./sensitive-third-party-screens.mdx"
 
 ## Input elements
 
-As any input element is highly likely to contain sensitive text such as email or password, **we mask these by default**. You can explicitly set this to false to disable the masking. You can then specify inputs types you would like to be masked.
+As any input element is highly likely to contain sensitive text such as email or password, **we mask these by default** (`maskAllInputs` defaults to `true`). You can explicitly set this to false to disable the masking. You can then specify inputs types you would like to be masked.
+
+> **Note:** `maskAllInputs` does not mask `hidden` or `file` inputs. Their values are recorded unmasked. If they hold sensitive data, block them with the `ph-no-capture` class or `blockSelector` (see [other elements](#other-elements)).
+
+Password inputs stay masked when you set `maskInputOptions`. The SDK adds `password: true` to a partial override, so you must set `password: false` explicitly if you want to record password fields.
 
 ```ts
 posthog.init('<ph_project_token>', {
@@ -50,9 +54,15 @@ posthog.init('<ph_project_token>', {
 })
 ```
 
+### Client-side and project settings
+
+You can also configure masking in the **Privacy and masking** section of your [project's replay settings](https://us.posthog.com/settings/project-replay#replay-masking). A masking option that you set in `session_recording` in `posthog.init` takes precedence over the project setting. When the two differ, the SDK logs a warning once.
+
 ## Text elements
 
-General text is not masked by default, but we provide multiple options for masking text:
+General text is not masked by default, but we provide multiple options for masking text. You can add the `ph-mask` class to an element, or use `maskTextSelector` as shown below.
+
+> **Note:** Text masking only masks text content, for example a rendered card number. It does not hide images, and the image `src` is still recorded. To redact an image, such as a scanned document, block it with `ph-no-capture` (see [other elements](#other-elements)).
 
 ### Mask all text
 
@@ -108,9 +118,9 @@ posthog.init('<ph_project_token>', {
 
 ## Other Elements
 
-If your application displays sensitive user information outside of input or text fields, or if there are areas of your application that you simply don't want to capture, you need to update your codebase to prevent PostHog from capturing this information during session recordings.
+If your application displays sensitive user information outside of input or text fields, such as images, or if there are areas of your application that you simply don't want to capture, you need to update your codebase to prevent PostHog from capturing this information during session recordings.
 
-To do so, you should add the CSS class name `ph-no-capture` to elements which should not be recorded. This will lead to the element being replaced with a block of the same size when you play back the recordings. Make sure everyone who watches recordings in your team is aware of this, so that they don't think your product is broken when something doesn't show up!
+To do so, you should add the CSS class name `ph-no-capture` to elements which should not be recorded, or set a CSS selector with the `blockSelector` option. This will lead to the element and its children being replaced with a block of the same size when you play back the recordings. Make sure everyone who watches recordings in your team is aware of this, so that they don't think your product is broken when something doesn't show up!
 
 ```html
 <div class="ph-no-capture">I won't be captured at all!</div>
