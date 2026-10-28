@@ -33,6 +33,8 @@ posthog.init('<ph_project_token>', {
 
 <CalloutBox icon="IconInfo" title="Client-side config takes precedence" type="fyi">
 
+You can set `maskAllInputs` and `maskTextSelector` without a code change in the **Privacy and masking** setting. The SDK loads this setting from your project and uses it for any of these options that you do not set in `posthog.init`.
+
 A masking option in the `session_recording` config of `posthog.init` takes precedence over the **Privacy and masking** setting in the session replay section of [your project settings](https://us.posthog.com/settings/project-replay#replay-masking). When the two differ, the SDK logs a warning once.
 
 </CalloutBox>
