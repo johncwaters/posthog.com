@@ -4,6 +4,10 @@ import SensitiveThirdPartyScreens from "./sensitive-third-party-screens.mdx"
 
 As any input element is highly likely to contain sensitive text such as email or password, **we mask these by default**. You can explicitly set this to false to disable the masking. You can then specify inputs types you would like to be masked.
 
+`maskAllInputs` does not mask the values of `hidden` and `file` inputs. If these hold sensitive data, block them with the `ph-no-capture` class or `blockSelector`.
+
+Password inputs stay masked when you pass a partial `maskInputOptions` object, because the SDK adds `password: true` to it. To record password fields, you must set `password: false` explicitly.
+
 ```ts
 posthog.init('<ph_project_token>', {
     session_recording: {
@@ -52,7 +56,9 @@ posthog.init('<ph_project_token>', {
 
 ## Text elements
 
-General text is not masked by default, but we provide multiple options for masking text:
+General text and images are not masked by default, but we provide multiple options for masking text. You can add the `ph-mask` class to an element to mask its text, or use the options below.
+
+> **Note:** Text masking only masks text content. It does not hide images, because PostHog still records the image `src`. To hide an image, such as a scanned document, add `ph-no-capture` to the image or its container. See [other elements](#other-elements).
 
 ### Mask all text
 
@@ -117,6 +123,10 @@ To do so, you should add the CSS class name `ph-no-capture` to elements which sh
 ```
 
 Note that adding `ph-no-capture` will also prevent any [autocapture](/docs/data/autocapture) events from being captured from that element.
+
+## Client-side and project masking settings
+
+You can also set masking in your project's [replay settings](https://us.posthog.com/settings/project-replay) under **Privacy and masking**. If you set `maskAllInputs`, `maskTextSelector`, or `blockSelector` in `posthog.init`, the client-side value takes precedence over the project setting. The SDK logs a warning one time when the two values are different.
 
 ## URL redaction
 
