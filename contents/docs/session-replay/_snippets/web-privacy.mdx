@@ -2,7 +2,9 @@ import SensitiveThirdPartyScreens from "./sensitive-third-party-screens.mdx"
 
 ## Input elements
 
-As any input element is highly likely to contain sensitive text such as email or password, **we mask these by default**. You can explicitly set this to false to disable the masking. You can then specify inputs types you would like to be masked.
+As any input element is highly likely to contain sensitive text such as email or password, **we mask these by default** (`maskAllInputs` defaults to `true`). The exceptions are `hidden` and `file` inputs, whose values are recorded unmasked. If these hold sensitive data, block them with the [`ph-no-capture` class](#other-elements).
+
+You can explicitly set `maskAllInputs` to `false` to disable the masking. You can then specify input types you would like to be masked with `maskInputOptions`. Password inputs stay masked even if you leave `password` out of `maskInputOptions`. To record password fields, you must set `password: false` explicitly.
 
 ```ts
 posthog.init('<ph_project_token>', {
@@ -29,6 +31,8 @@ posthog.init('<ph_project_token>', {
 })
 ```
 
+> **Note:** Masking options set in `posthog.init` take precedence over the **Privacy and masking** settings in your [project's replay settings](https://us.posthog.com/settings/project-replay). If the two differ, the SDK logs a warning once.
+
 ### Mask or un-mask specific inputs
 
 You can control the masking more granularly by using `maskInputFn` to customize how the masking behaves. For example, you may want to only redact text that looks like an email address, or comes from inputs that aren't search boxes.
@@ -52,7 +56,7 @@ posthog.init('<ph_project_token>', {
 
 ## Text elements
 
-General text is not masked by default, but we provide multiple options for masking text:
+General text and images are not masked by default, but we provide multiple options for masking text. These options mask text content only. They do not hide images, whose `src` is still recorded. To redact an image, such as a scanned document, use the [`ph-no-capture` class](#other-elements).
 
 ### Mask all text
 
@@ -78,6 +82,8 @@ posthog.init('<ph_project_token>', {
     }
 })
 ```
+
+You can also add the `ph-mask` class to an element to mask its text.
 
 > **IMPORTANT**: The masking of an element applies to its children meaning `:not` selectors do not work. The ability to selectively mask elements is detailed [below](#selective-privacy---only-reveal-things-that-are-marked-as-safe)
 
