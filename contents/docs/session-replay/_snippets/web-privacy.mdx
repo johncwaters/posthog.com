@@ -31,7 +31,7 @@ posthog.init('<ph_project_token>', {
 })
 ```
 
-> **Note:** Masking options set in `posthog.init` take precedence over the **Privacy and masking** settings in your [project's replay settings](https://us.posthog.com/settings/project-replay). If the two differ, the SDK logs a warning once.
+> **Note:** You can also set input and text masking in the **Privacy and masking** section of your [project's replay settings](https://us.posthog.com/settings/project-replay#replay-masking). The SDK loads these settings remotely, so you do not need a code change. A masking option that you set in `posthog.init` takes precedence over the project setting for that option. The SDK checks each option separately. For example, if you set only `maskAllInputs` in `posthog.init`, the project's text masking setting still applies. If the two differ, the SDK logs a warning once.
 
 ### Mask or un-mask specific inputs
 
