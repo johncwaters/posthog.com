@@ -128,6 +128,8 @@ Note that adding `ph-no-capture` will also prevent any [autocapture](/docs/data/
 
 You can also set masking in your project's [replay settings](https://us.posthog.com/settings/project-replay) under **Privacy and masking**. If you set `maskAllInputs`, `maskTextSelector`, or `blockSelector` in `posthog.init`, the client-side value takes precedence over the project setting. The SDK logs a warning one time when the two values are different.
 
+The SDK compares each option separately. An option that you do not set in `posthog.init` uses the project setting. For example, if your project setting masks all text and you set only `maskAllInputs: false` in `posthog.init`, inputs are not masked, but all text stays masked.
+
 ## URL redaction
 
 Session replay captures the page URL shown in the replay player URL bar and timeline. Query strings can include sensitive data such as auth tokens or user identifiers. To redact them, provide a `maskCapturedNetworkRequestFn` callback, the same callback used for [network capture](/docs/session-replay/network-recording#how-to-register-a-callback-to-inspect-and-redact-each-network-request) also runs against the page URL captured in the snapshot, so a single configuration covers both surfaces.
