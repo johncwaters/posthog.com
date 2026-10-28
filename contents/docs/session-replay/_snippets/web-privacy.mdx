@@ -56,7 +56,9 @@ posthog.init('<ph_project_token>', {
 
 ### Client-side and project settings
 
-You can also configure masking in the **Privacy and masking** section of your [project's replay settings](https://us.posthog.com/settings/project-replay#replay-masking). A masking option that you set in `session_recording` in `posthog.init` takes precedence over the project setting. When the two differ, the SDK logs a warning once.
+You can also configure masking in the **Privacy and masking** section of your [project's replay settings](https://us.posthog.com/settings/project-replay#replay-masking). The SDK loads these settings remotely, so you can change masking without a code change. A masking option that you set in `session_recording` in `posthog.init` takes precedence over the project setting. When the two differ, the SDK logs a warning once.
+
+Precedence applies to each option separately. An option that you do not set in `posthog.init` still comes from the project setting. For example, if your project setting masks all text, and you set only `maskAllInputs: false` in code, inputs are not masked, but all text is still masked.
 
 ## Text elements
 
