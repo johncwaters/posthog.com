@@ -38,6 +38,7 @@ import WizardSection from './_snippets/wizard-section.mdx'
         releaseName: "my-application", // (optional) Release name, defaults to repository name
         releaseVersion: "1.0.0", // (optional) Release version, defaults to current git commit
         deleteAfterUpload: true, // (optional) Delete sourcemaps after upload, defaults to true
+        failOnError: true, // (optional) Fail webpack builds if source map processing or upload fails, defaults to true
     },
   });
 
@@ -56,6 +57,8 @@ import WizardSection from './_snippets/wizard-section.mdx'
   </div>
 
   If you are using Vercel (or any other hosting service), make sure these environment variables are added to your project settings, not just your local setup. This enables source maps to be automatically uploaded on your production build. 
+
+  By default, `next build` fails if PostHog cannot process or upload your source maps, for example because your personal API key is invalid. The source maps are deleted before the build fails, so they are not exposed. To log the error and let the build continue, set `failOnError` to `false`. This option applies only to webpack builds. Turbopack builds always fail on these errors. `next dev` always logs the error and continues.
 </Step>
 
 <Step checkpoint title="Verify source map generation">

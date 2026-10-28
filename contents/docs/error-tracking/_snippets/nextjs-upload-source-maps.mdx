@@ -25,6 +25,7 @@ export default withPostHogConfig(nextConfig, {
       releaseName: "my-application", // (optional) Release name, defaults to repository name
       releaseVersion: "1.0.0", // (optional) Release version, defaults to current git commit
       deleteAfterUpload: true, // (optional) Delete sourcemaps after upload, defaults to true
+      failOnError: true, // (optional) Fail webpack builds if source map processing or upload fails, defaults to true
   },
 });
 
