@@ -2,71 +2,74 @@
 title: What to watch
 ---
 
-import { ProductScreenshot } from "components/ProductScreenshot";
+**Highlights** is the first tab on the Replay Vision home. Under the heading **Sessions worth watching**, it reads the [observations](/docs/replay-vision/observations) your scanners produced over a date range and picks the sessions that show signs of failures, struggles, or payment problems. You start with a short list of sessions instead of a table per scanner.
 
-**What to watch** is the first tab on the Replay Vision home. It reads the [observations](/docs/replay-vision/observations) every scanner produced over a date range and picks the ones most worth a look, so you can start with a short list of sessions instead of a table per scanner. The heading shows how many it picked, like **Top 12 sessions**.
+The cards fill one to four columns, depending on the width of the window.
 
-<ProductScreenshot
-  imageLight="https://res.cloudinary.com/dmukukwp6/image/upload/q_auto,f_auto/rv_what_to_watch_feed_c0165f9afb.png"
-  alt="The What to watch feed: one row per session with a thumbnail, New tag, headline, the scanner that found it, and why it's worth watching"
-  classes="rounded"
-/>
+## What each card shows
 
-## What each row shows
+Each card is one observation:
 
-The feed is one list, and each row is one observation:
-
-- **Thumbnail** – a frame from the recording, with the key moment's timestamp on it. The key moment is where the scan's answer rests most.
-- **Headline** – the summary's title for summarizers. For other scanner types, it's the scan's sentence about what makes the session worth watching, or the first sentence of the reasoning when the scan didn't write one.
-- **Scanner** – the scanner's name, with an icon in its type's color. Hover it to see the scanner's question and verdict. Click it to show only that scanner's sessions.
+- **Scanner** – the scanner's name, with an icon in its type's color. Hover it to see the scanner's question and verdict. Click it to open the scanner.
 - **Person and time** – who was recorded, with a link to their person profile, and when the scan ran.
-- **Why this recording** – one line on why the observation made the feed.
+- **Headline** – the summary's title for summarizers. For other scanner types, it's the first sentence of the scan's reasoning.
+- **Why this recording** – one line on why the session is in the feed. Hover it to see the full line.
+- **Thumbnail** – a frame from the recording at the key moment. The key moment is where the scan's answer rests most.
+- **Watch from** – opens the session at the key moment. Recordings without a key moment show **Watch session**.
+- **Similar sessions** – shows when other sessions from the same scanner look like this one. See [similar sessions](#similar-sessions).
 
-Rows for observations you haven't opened yet are marked **New**. This is tracked per user, and opening the observation's page clears it.
+Cards for observations you haven't opened yet are marked **New**. This is tracked per user, and opening the observation's page clears it.
 
 ## Watching a session
 
-Click a row to open its [observation page](/docs/replay-vision/observations#the-observation-page). The player there starts 3 seconds before the key moment, so you see what led up to it. Recordings without a key moment start from the beginning. Going back returns you to the feed.
+Click a card to open its [observation page](/docs/replay-vision/observations#the-observation-page). The player there starts 3 seconds before the key moment, so you see what led up to it. Recordings without a key moment start from the beginning. Going back returns you to the feed.
 
 ## Why a session is in the feed
 
-Every row has a **Why this recording** line that gives one of these reasons:
+The feed sorts the sessions it picks into three kinds of moment:
 
-| Reason                                    | What it means                                                                                                                                                                  |
-| ----------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| The scanner raised signals                | The session fed findings into [Signals](/docs/self-driving/inbox/sources). The row names the issue type (bug, crash, design flaw, or UX friction) and the findings' headlines |
-| A rare answer                             | A monitor gave an answer that's unusual for it in this window                                                                                                                  |
-| The scanner answered yes                  | A monitor hit, when the window is too thin to know which answer is unusual                                                                                                     |
-| Far from the recent average               | A scorer's score is far from its average over the window                                                                                                                       |
-| An uncommon tag                           | A classifier picked a category it rarely uses lately                                                                                                                           |
-| Reads unlike the scanner's other sessions | A summary that differs from the scanner's other summaries in the window                                                                                                        |
-| Worth watching                            | The scan judged the session worth watching, whatever its answer was                                                                                                            |
-| Signs of friction                         | The scan describes errors, retries, or dead ends                                                                                                                               |
-| New since you last looked                 | Nothing stood out, and you haven't opened it yet                                                                                                                               |
-| The newest from this scanner              | Nothing stood out, and it's among the most recent                                                                                                                              |
+| Kind                         | What it covers                                               | Why this recording                        |
+| ---------------------------- | ------------------------------------------------------------ | ----------------------------------------- |
+| Failures                     | Errors, failed requests, clicks that did nothing, dead ends  | Something failed in this session          |
+| Struggles                    | Repeated attempts, rage clicks, abandoned forms, workarounds | The user struggled in this session        |
+| Payment or checkout problems | Failed payments, cancellations and downgrades, usage limits  | A payment problem came up in this session |
 
-The last two only pad out a feed that has few findings. If every row is one of them, the feed says that nothing stood out in this window and shows the newest sessions.
+When similar sessions exist, the line names them too, for example **Something failed here and in 3 similar sessions**.
 
-## Filtering the feed
+When few sessions stand out, the feed adds other sessions to fill the list:
 
-The controls above the feed narrow what it picks from:
+- **New since you last looked** – nothing stood out, and you haven't opened it yet.
+- **The newest from this scanner** – nothing stood out, and it's among the most recent.
 
-- **Search sessions** – matches the scan's own words (title, summary, reasoning, and the worth-watching sentence) and the scanner's name. It searches the whole window, not only the sessions that would have shown without it. For searching by meaning, use the **Search** tab, see [searching observations](/docs/replay-vision/observations#searching-observations).
-- **Scanners** – follow only the scanners you pick. Use the **All scanners** row at the top to select or clear all scanners at once.
-- **Created by** – filter by who created the scanner, showing only observations from scanners created by specific users.
-- **Tags** – follow scanners with the tags you pick, handy when you have many scanners for one area.
-- **Type** – one [scanner type](/docs/replay-vision/scanner-types).
-- **Date range** – the last 7 days by default, up to the last 90 days.
+If every card is one of these, the feed says that no sessions stood out in this window and shows the newest sessions.
 
-**Clear filters** resets them. The URL keeps your filters, so you can share a filtered feed.
+## Similar sessions
+
+The feed groups sessions from one scanner that look like near duplicates, and shows one card for the group. Click the **similar sessions** button on a card to see the other sessions in a popover, with how many people they came from. Click a session in the popover to open it, or click **See all similar sessions** to list them on the scanner's **Observations** tab.
+
+## Customizing the feed
+
+The controls next to the heading change what the feed picks from:
+
+- **All scanners** or **My scanners** – show sessions from every scanner, or only from scanners you created. This shows only when you created at least one scanner.
+- **Date range** – the last 24 hours, 7 days, 30 days, or 90 days. The last 7 days is the default.
+- **Customize feed** (gear icon) – pick the kinds of moment to include: **Failures**, **Struggles**, and **Payment or checkout problems**. Keep at least one kind on. When you turn a kind off, the feed drops those sessions and does not add weaker sessions of the other kinds in their place. A dot on the gear icon shows that some kinds are hidden.
+
+The feed saves these choices per project, in your browser.
+
+To search observations by meaning, use the **Search** tab. See [searching observations](/docs/replay-vision/observations#searching-observations).
+
+## Hiding a session
+
+Click **×** on a card to remove it from the feed. Pick a reason (**Not a real problem**, **Already known**, **Not my area**, or **Other reason**), or click **Hide without a reason**. Click **Undo** to return it.
 
 ## When the feed is empty
 
 An empty feed tells you why, and what to do about it:
 
-- **No scanners yet** – the tab explains the feed with example cards and offers **Create your first scanner**.
+- **No scanners yet** – the tab explains the feed with example cards and offers to create your first scanner.
 - **Your Replay Vision credits are used up for this period** – scans are skipped until the period resets or you raise the limit. See [quota and limits](/docs/replay-vision/quota-and-limits).
-- **None of your scanners are running** – every scanner is turned off. Turn one on and its clips appear after the next matching recording.
-- **Every running scanner has reached its own credit limit** – they stop scanning until the period resets. Raise a scanner's limit to start it again. Sessions they skipped aren't scanned later.
-- **No clips match these filters in this window** – loosen your filters or click **Clear filters**.
-- **Nothing stood out in this window** – try a longer date range.
+- **All scanners on this project are off** – turn one on to scan new recordings again.
+- **Every running scanner has reached its credit limit for this period** – they stop scanning until the period resets. Raise a scanner's limit to start it again. Sessions they skipped aren't scanned later.
+- **No sessions from your scanners stood out** – shows when you picked **My scanners**. Click **Show all scanners**.
+- **No sessions stood out** – click the button to show a longer date range.
