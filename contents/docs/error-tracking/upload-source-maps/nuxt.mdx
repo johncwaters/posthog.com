@@ -15,6 +15,19 @@ For Nuxt v3.7 and above, the `@posthog/nuxt` module automatically handles source
 
 No manual configuration is needed – follow the [Nuxt Error Tracking installation guide](/docs/error-tracking/installation/nuxt-3-7) to set up the module, and source maps are automatically generated and uploaded when you build your project.
 
+From version 1.8.0 of `@posthog/nuxt`, `nuxt build` fails if PostHog cannot process or upload your source maps, for example because your personal API key is invalid. To log the error and continue the build, set `failOnError` to `false`:
+
+```ts file=nuxt.config.ts
+export default defineNuxtConfig({
+  posthogConfig: {
+    sourcemaps: {
+      // ...your existing sourcemaps config
+      failOnError: false, // (optional) Fail the build if sourcemap processing or upload fails, defaults to true
+    },
+  },
+})
+```
+
 ## Nuxt v3.6 and below
 
 For older versions of Nuxt, you'll need to manually configure source map generation and upload using the PostHog CLI.

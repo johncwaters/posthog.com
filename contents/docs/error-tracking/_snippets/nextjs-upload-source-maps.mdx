@@ -25,6 +25,7 @@ export default withPostHogConfig(nextConfig, {
       releaseName: "my-application", // (optional) Release name, defaults to repository name
       releaseVersion: "1.0.0", // (optional) Release version, defaults to current git commit
       deleteAfterUpload: true, // (optional) Delete sourcemaps after upload, defaults to true
+      failOnError: true, // (optional) Fail webpack builds if sourcemap processing or upload fails, defaults to true
   },
 });
 
@@ -37,6 +38,8 @@ Where you should set the following environment variables:
 | `POSTHOG_API_KEY` | [Personal API key](https://app.posthog.com/settings/user-api-keys#variables) with at least `write` access on `error tracking` |
 | `POSTHOG_PROJECT_ID` | Project ID you can find in your [project settings](https://app.posthog.com/settings/project#variables) |
 | `NEXT_PUBLIC_POSTHOG_HOST` | Your PostHog instance URL. Defaults to `https://us.posthog.com` |
+
+From version 1.12.0 of `@posthog/nextjs-config`, a webpack build fails if PostHog cannot process or upload your source maps, for example because your personal API key is invalid. To log the error and continue the build, set `failOnError` to `false`. This option applies only to webpack builds. Turbopack builds always fail on these errors, and `next dev` always logs the error and continues.
 
 ### That's it!
 

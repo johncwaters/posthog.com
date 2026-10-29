@@ -36,6 +36,7 @@ import WizardSection from './_snippets/wizard-section.mdx'
           releaseName: 'my-application', // (optional) Release name
           releaseVersion: '1.0.0', // (optional) Release version
           deleteAfterUpload: true, // (optional) Delete sourcemaps after upload, defaults to true
+          failOnError: true, // (optional) Fail the build if sourcemap processing or upload fails, defaults to true
         },
       }),
     ],
@@ -55,6 +56,8 @@ import WizardSection from './_snippets/wizard-section.mdx'
   </div>
 
   If you are using a CI/CD service, make sure these environment variables are added to your project settings, not just your local setup. This enables source maps to be automatically uploaded on your production build.
+
+  From version 1.8.0 of `@posthog/webpack-plugin`, the build fails if PostHog cannot process or upload your source maps, for example because your personal API key is invalid. The plugin deletes the source maps before the build fails. To log the error and continue the build, set `failOnError` to `false`. Watch builds, such as `webpack --watch` and dev servers, always log the error and continue.
 </Step>
 
 <Step checkpoint title="Verify source map upload and injection">
