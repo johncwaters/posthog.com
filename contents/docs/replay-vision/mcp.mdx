@@ -75,7 +75,7 @@ List tools return a compact row per observation: its ID, session, status, and a 
 Across scanners:
 
 - `vision-observations-search` – search observations by meaning, like "users confused by the pricing page". It matches what the scanner wrote, so it finds sessions described in different words. Scope it to one scanner or search them all.
-- `vision-scanners-watch-feed` – rank recent observations by how worth watching their recordings are, with the reason each made the list.
+- `vision-scanners-highlight-feed` – the sessions the [Highlights](/docs/replay-vision/what-to-watch) feed picks, with the reason each made the list. Pass `categories` (`failure`, `struggle`, `revenue`) to include only some kinds of moment.
 
 Aggregate stats, rather than the rows themselves:
 
