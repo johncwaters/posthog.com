@@ -4,6 +4,10 @@ import SensitiveThirdPartyScreens from "./sensitive-third-party-screens.mdx"
 
 As any input element is highly likely to contain sensitive text such as email or password, **we mask these by default**. You can explicitly set this to false to disable the masking. You can then specify inputs types you would like to be masked.
 
+When `maskAllInputs` is `true` (the default), session replay masks the value of every input, except `hidden` and `file` inputs, whose values are recorded unmasked. Block those with `ph-no-capture` or `blockSelector` if they hold sensitive data.
+
+A `session_recording` masking option set in `posthog.init` takes precedence over the project **Privacy and masking** setting. The SDK warns once when the two differ.
+
 ```ts
 posthog.init('<ph_project_token>', {
     session_recording: {
@@ -28,6 +32,8 @@ posthog.init('<ph_project_token>', {
     }
 })
 ```
+
+Password inputs are always masked by default. The SDK adds `password: true` to a partial `maskInputOptions` override, so set `password: false` explicitly if you must record password fields.
 
 ### Mask or un-mask specific inputs
 
@@ -57,6 +63,8 @@ General text is not masked by default, but we provide multiple options for maski
 ### Mask all text
 
 > **IMPORTANT**: The `text` related config options only apply to non-input text. Inputs are masked differently and have separate methods (as detailed [above](#input-elements)).
+
+> **Note:** `maskTextSelector` and the `ph-mask` class mask text content only. They don't hide an image, whose `src` is still recorded. To redact a rendered image such as a scanned document, block the image or a container element with `ph-no-capture` (see [other elements](#other-elements)).
 
 ```ts
 posthog.init('<ph_project_token>', {
